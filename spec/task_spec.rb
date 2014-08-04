@@ -15,4 +15,10 @@ describe Task do
   it 'starts with no tasks' do
     Task.all.should eq []
   end
+
+  it "lets you save tasks to the database" do
+    task = Task.new('learn SQL')
+    task.save
+    Task.all.should eq [task]
+  end
 end

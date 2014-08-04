@@ -1,3 +1,4 @@
+require 'pg'
 
 class Task
   def initialize(name)
@@ -8,8 +9,10 @@ class Task
     @name
   end
 
-  def self.all
-    []
+  def save
+    database = PG.connect(:dbname => 'to_do')
+    database.exec("INSERT INTO tasks (name) VALUES ('#{@name}');")
+
   end
 end
 
