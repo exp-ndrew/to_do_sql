@@ -1,15 +1,14 @@
 class List
 
+  attr_accessor(:name, :id)
+
   def initialize(name)
     @name = name
   end
 
-  def name
-    @name
-  end
-
-  def id
-    @id
+  def self.create(name)
+    list = List.new(name)
+    list.save
   end
 
   def list_delete

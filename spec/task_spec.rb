@@ -26,7 +26,6 @@ describe Task do
     task1.save
     task2.save
     Task.all.should eq [task1, task2]
-    print Task.all
   end
 
   it 'is the same task if it has the same name and list ID' do
