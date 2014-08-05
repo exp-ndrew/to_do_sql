@@ -1,0 +1,139 @@
+To-Do List
+
+Enter 'm' to make a new list.
+Enter '-' to delete a list.
+
+> m
+
+---------------------
+Type your new list name:
+
+> House
+
+---------------------
+
+Here are your current lists:
+
+1. House
+
+Enter 'm' to make a new list.
+Enter a list's number to select it.               # if List.all returns nil don't show this
+Enter '-' to delete a list.
+
+> 1
+
+---------------------
+House List
+
+Press 'a' to add task.
+Press 'l' to return to the list menu.
+
+> a
+
+Type your task description:
+
+> clean the house
+
+Added "clean the house" to your House list.
+
+---------------------
+Here is your House list:
+
+ 1 [   ]  clean the house
+
+
+Enter a task's number to mark it complete.          # if tasks.all returns nil, don't show this
+
+Press 'a' to add task.
+Press 'd' to delete a task.                         # if tasks.all returns nil, don't show this
+Press 'l' to return to the list menu.
+
+> a
+
+Type your task description:
+
+> wash the dog
+
+Added "wash the dog" to your House list.
+
+---------------------
+Here is your House list:
+
+ 1 [   ]  clean the house
+ 2 [   ]  wash the dog
+
+
+Enter a task's number to mark it complete.
+
+Press 'a' to add task.
+Press 'd' to delete a task.
+Press 'l' to return to the list menu.
+
+> 1
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (updates without redraw)
+Here is your House list:
+
+ 1 [ ✓ ]  clean the house
+ 2 [   ]  wash the dog
+
+
+Enter a task's number to mark it complete.
+
+Press 'a' to add task.
+Press 'd' to delete a task.
+Press 'l' to return to the list menu.
+
+
+> d
+
+Enter a task's number to delete it:
+
+> 1
+
+Task "clean the house" deleted!
+
+---------------------
+Here is your House list:
+
+ 1 [   ] wash the dog
+
+
+Enter a task's number to mark it complete.
+
+Press 'a' to add task.
+Press 'd' to delete a task.
+Press 'l' to return to the list menu.
+
+
+> l
+
+---------------------
+Here are your current lists:
+
+1. House
+
+Enter 'm' to make a new list.
+Enter a list's number to select it.
+Enter '-' to delete a list.
+
+> -
+
+Enter the number of the list to delete:
+
+> 1
+
+This will delete all tasks in the "House". Is this okay?
+Type yes or no:
+
+> yes
+
+House list deleted!
+
+
+---------------------
+To-Do List
+
+Enter 'm' to make a new list.
+Enter '-' to delete a list.
+
