@@ -1,9 +1,10 @@
 require 'pg'
 
 class Task
-  def initialize(name, list_id)
+  def initialize(name, list_id, status)
     @name = name
     @list_id = list_id
+    @status = status
   end
 
   def name
@@ -14,8 +15,12 @@ class Task
     @list_id
   end
 
+  def status
+    @status
+  end
+
   def save
-    DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{@name}', #{@list_id});")
+    DB.exec("INSERT INTO tasks (name, list_id, status) VALUES ('#{@name}', #{@list_id}, '#{@status}');")
   end
 
   def self.all
@@ -24,7 +29,8 @@ class Task
     results.each do |result|
       name = result['name']
       list_id = result['list_id'].to_i
-      tasks << Task.new(name, list_id)
+      status = result['status']
+      tasks << Task.new(name, list_id, status)
     end
     tasks
   end

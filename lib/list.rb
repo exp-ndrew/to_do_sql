@@ -1,3 +1,5 @@
+class List
+
   def initialize(name)
     @name = name
   end
@@ -8,6 +10,13 @@
 
   def id
     @id
+  end
+
+  def list_delete
+      #make List method which contains
+      #puts 'This will delete all tasks in the "House".'
+      #puts 'Is this okay? Type yes or no:"
+      # House list deleted!
   end
 
   def ==(another_list)
@@ -28,6 +37,4 @@
     end
     lists
   end
-
-
 end
