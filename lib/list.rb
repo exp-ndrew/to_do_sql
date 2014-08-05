@@ -2,8 +2,9 @@ class List
 
   attr_accessor(:name, :id)
 
-  def initialize(name)
+  def initialize(name, id=nil)
     @name = name
+    @id = id
   end
 
   def self.create(name)
@@ -11,20 +12,17 @@ class List
     list.save
   end
 
-  def list_delete
-      #make List method which contains
-      #puts 'This will delete all tasks in the "House".'
-      #puts 'Is this okay? Type yes or no:"
-      # House list deleted!
+  def save
+    results = DB.exec("INSERT INTO lists (name) VALUES ('#{@name}') RETURNING id;")
+    @id = results.first['id'].to_i
+  end
+
+  def delete
+    DB.exec("DELETE FROM lists WHERE id = #{self.id}")
   end
 
   def ==(another_list)
     self.name == another_list.name
-  end
-
-  def save
-    results = DB.exec("INSERT INTO lists (name) VALUES ('#{@name}') RETURNING id;")
-    @id = results.first['id'].to_i
   end
 
   def self.all
@@ -32,7 +30,8 @@ class List
     lists = []
     results.each do |result|
       name = result['name']
-      lists << List.new(name)
+      id = result['id']
+      lists << List.new(name, id)
     end
     lists
   end

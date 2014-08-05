@@ -1,98 +1,96 @@
 require 'pg'
 require './lib/task'
 require './lib/list'
+require 'pry'
 
 DB = PG.connect({:dbname => 'to_do'})
+@current_list = nil
 
 def start
   puts "Welcome to the To Do list!"
-  list_menu
-end
+  puts "Pick an option"
 
-def list_menu
-  puts "Enter 'm' to make a new list."
+  puts "n = new list"
+  puts "l = list lists"
+  puts "s = select list"
+  puts "c = create task"
+  puts "t = list tasks"
+  puts "d = delete a task"
 
-  if List.all != nil
-    puts "Enter a list's number to select it."
-    puts "Enter '-' to delete a list."
+  menu_option = gets.chomp
+
+  if menu_option == 'n'
+    create_list
+  elsif menu_option == 'l'
+    list_lists
+  elsif menu_option == 'c'
+    create_task
+  elsif menu_option == 't'
+    list_task
+  elsif menu_option == 'd'
+    delete_task
   end
-
-  user_input = gets.chomp
-
-  if user_input == 'm'
-    #list_new
-    puts "Type your new list name:"
-    user_input = gets.chomp
-    List.create(user_input)
-
-    list_show
-
-  elsif List.all != nil
-
-    if user_input == '-'
-      #list_delete
-      puts "Enter the number of the list to delete:"
-      list_number = gets.chomp
-      list_delete(list_number) ## WRITE THIS
-    elsif user_input.class == "Fixnum"
-      #list_show
-      list_show
-    end
-
-  else puts "I'm sorry, I can't do that."
-  end
-
 end
 
-def list_show  # shows a list of lists
- lists = List.all
- lists.each_with_index do |list, index|
-   puts "#{(index+1)} #{list.name}"
- end
-  list_menu
+def create_task
+  puts "enter task name"
+  task_name = gets.chomp
+  Task.create(task_name)
+
+  start
 end
 
-def tasks_show(list_id) # shows a list of tasks
-  # "#{current list name} List"
-  # puts "\n"
+def list_task
   tasks = Task.all
-  tasks.each_with_index do |task, index|
-    db_status = task.status
-    is_complete = nil
-    if db_status == "complete"
-      is_complete = "\u2713"
-    elsif db_status == "active"
-      is_complete = " "
-    elsif db_status == "delete"
-      # task.delete method WRITE THIS
+
+  tasks.each do |task|
+    p "#{task.name}"
+  end
+
+  start
+end
+
+def delete_task
+  puts "enter name of task to delete"
+  tasks = Task.all
+  tasks.each do |task|
+    p "#{task.name}"
+  end
+  delete_name = gets.chomp
+  tasks.each do |task|
+    if delete_name == task.name
+      puts "in the delete"
+      DB.exec("DELETE FROM tasks WHERE name LIKE '#{task.name}'")
     end
-    puts "#{(index+1)} [ #{is_complete} ] #{task.name}"
   end
-  tasks_menu
+  start
 end
 
-def tasks_menu
-  if List.all != nil
-    puts "Enter a task's number to mark it complete."
-  end
-  puts "\n"
-  puts "To add a task, press 'a'"
-  if List.all != nil
-    puts "To delete a task, press 'd'"
-  end
-  puts "\n"
-  puts "To return to the list menu, press 'l'"
+def create_list
+  puts "enter list name"
+  list_name = gets.chomp
+  List.create(list_name)
 
-  user_input = gets.chomp
-
-  if user_input == "a"
-    puts "Type a description for your new task:"
-    name = Task.new(name,@list_id)
-  elsif user_input == "d"
-    puts "Enter a task's number to delete it:"
-    delete_number = gets.chomp
-    Task.task_delete(delete_number)
-  end
+  start
 end
+
+def list_lists
+  lists = List.all
+
+  lists.each do |list|
+    p "#{list.name}"
+  end
+
+  start
+end
+
+# def select_list
+#   puts "type the name of a list to select"
+#   list_selector = gets.chomp
+#   @current_list_id = DB.exec("SELECT FROM lists WHERE name LIKE #{list_selector}")
+
+#   DB.exec("SELECT * FROM tasks WHERE list_id = #{@current_list_id};")
+# end
+
 
 start
